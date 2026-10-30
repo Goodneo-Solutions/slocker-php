@@ -1,0 +1,24 @@
+{
+    "name": "superroute/slocker",
+    "description": "sLocker: deliver to Superroute smart lockers. The partner locker delivery API and its webhooks.",
+    "type": "library",
+    "license": "proprietary",
+    "keywords": [
+        "superroute",
+        "smart locker",
+        "parcel locker",
+        "delivery",
+        "webhooks"
+    ],
+    "homepage": "https://open.superroute.ca/developer",
+    "require": {
+        "php": ">=8.1",
+        "ext-curl": "*",
+        "ext-json": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Superroute\\SLocker\\": "src/"
+        }
+    }
+}
