@@ -16,6 +16,9 @@
         "ext-curl": "*",
         "ext-json": "*"
     },
+    "suggest": {
+        "superroute/sapp": "The customer side (Superroute\\SLocker\\Customer): pickups, locker locations, storage, the locker shop and resale on the sApp core (^0.2.2)"
+    },
     "autoload": {
         "psr-4": {
             "Superroute\\SLocker\\": "src/"
