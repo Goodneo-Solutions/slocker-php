@@ -31,6 +31,7 @@ final class LockerApi
             'lockerResaleDeals' => new Operation('GET', '/app/v1/locker-resale/deals', 'token', ['status', 'open', 'page', 'per_page'], null),
             'lockerResaleTerms' => new Operation('GET', '/app/v1/locker-resale/terms', 'token', ['locale'], null),
             'platformAppCollectPickup' => new Operation('POST', '/app/v1/pickups/{deliveryId}/collect', 'token', [], 'json'),
+            'platformAppExtendPickup' => new Operation('POST', '/app/v1/pickups/{deliveryId}/extend', 'token', [], null),
             'platformAppHandOverPickup' => new Operation('POST', '/app/v1/pickups/{deliveryId}/handoff', 'token', [], 'json'),
             'platformAppLockerLocation' => new Operation('GET', '/app/v1/locker-locations/{locationId}', 'token', ['latitude', 'longitude', 'origin_address_1', 'origin_address_2', 'origin_city', 'origin_province', 'origin_country', 'origin_postcode'], null),
             'platformAppLockerLocationGuide' => new Operation('GET', '/app/v1/locker-locations/{locationId}/guide', 'token', [], null),
@@ -56,7 +57,9 @@ final class LockerApi
             'platformAppLockerStorageReturnTime' => new Operation('POST', '/app/v1/locker-storage/rentals/{id}/return-time', 'token', [], 'json'),
             'platformAppLockerStorageShipment' => new Operation('POST', '/app/v1/locker-storage/rentals/{id}/shipment', 'token', [], 'json'),
             'platformAppPickup' => new Operation('GET', '/app/v1/pickups/{deliveryId}', 'token', [], null),
+            'platformAppPickupPreferences' => new Operation('GET', '/app/v1/pickups/preferences', 'token', [], null),
             'platformAppPickups' => new Operation('GET', '/app/v1/pickups', 'token', ['status', 'per_page', 'page'], null),
+            'platformAppSavePickupPreferences' => new Operation('PUT', '/app/v1/pickups/preferences', 'token', [], 'json'),
             'platformAppTakeBackPickup' => new Operation('POST', '/app/v1/pickups/{deliveryId}/handoff/revoke', 'token', [], null),
             'platformAppUpdateLockerPreference' => new Operation('PUT', '/app/v1/locker-locations/{locationId}/preference', 'token', [], 'json'),
             'releaseLockerResaleCode' => new Operation('POST', '/app/v1/locker-resale/deals/{id}/release', 'token', [], null),
@@ -105,6 +108,12 @@ final class LockerApi
     public function platformAppCollectPickup(int $deliveryId, array $body, ?array $extraQuery = null): mixed
     {
         return ($this->call)(self::operations()['platformAppCollectPickup'], ['deliveryId' => $deliveryId, 'extraQuery' => $extraQuery], $body, []);
+    }
+
+    /** POST /app/v1/pickups/{deliveryId}/extend — Extend the pickup time of a locker pickup */
+    public function platformAppExtendPickup(int $deliveryId, ?array $extraQuery = null): mixed
+    {
+        return ($this->call)(self::operations()['platformAppExtendPickup'], ['deliveryId' => $deliveryId, 'extraQuery' => $extraQuery], null, []);
     }
 
     /** POST /app/v1/pickups/{deliveryId}/handoff — Hand a locker pickup to somebody else */
@@ -257,10 +266,22 @@ final class LockerApi
         return ($this->call)(self::operations()['platformAppPickup'], ['deliveryId' => $deliveryId, 'extraQuery' => $extraQuery], null, []);
     }
 
+    /** GET /app/v1/pickups/preferences — Locker pickup preferences */
+    public function platformAppPickupPreferences(?array $extraQuery = null): mixed
+    {
+        return ($this->call)(self::operations()['platformAppPickupPreferences'], ['extraQuery' => $extraQuery], null, []);
+    }
+
     /** GET /app/v1/pickups — List customer locker pickups */
     public function platformAppPickups(?string $status = null, ?int $perPage = null, ?int $page = null, ?array $extraQuery = null): mixed
     {
         return ($this->call)(self::operations()['platformAppPickups'], ['status' => $status, 'per_page' => $perPage, 'page' => $page, 'extraQuery' => $extraQuery], null, []);
+    }
+
+    /** PUT /app/v1/pickups/preferences — Save locker pickup preferences */
+    public function platformAppSavePickupPreferences(array $body, ?array $extraQuery = null): mixed
+    {
+        return ($this->call)(self::operations()['platformAppSavePickupPreferences'], ['extraQuery' => $extraQuery], $body, []);
     }
 
     /** POST /app/v1/pickups/{deliveryId}/handoff/revoke — Take back a handed-over locker pickup */
