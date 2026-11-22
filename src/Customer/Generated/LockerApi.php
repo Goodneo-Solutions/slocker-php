@@ -44,6 +44,7 @@ final class LockerApi
             'platformAppLockerShopOpen' => new Operation('POST', '/app/v1/locker-shop/orders/{id}/open', 'token', [], null),
             'platformAppLockerShopOrder' => new Operation('GET', '/app/v1/locker-shop/orders/{id}', 'token', [], null),
             'platformAppLockerShopOrders' => new Operation('GET', '/app/v1/locker-shop/orders', 'token', ['scope', 'page', 'per_page'], null),
+            'platformAppLockerShopRecordInterest' => new Operation('POST', '/app/v1/locker-shop/interest', 'token', [], 'json'),
             'platformAppLockerShopRefundRequest' => new Operation('POST', '/app/v1/locker-shop/orders/{id}/refund-request', 'token', [], null),
             'platformAppLockerStorageClaim' => new Operation('POST', '/app/v1/locker-storage/rentals/claim', 'token', [], 'json'),
             'platformAppLockerStorageDelivery' => new Operation('POST', '/app/v1/locker-storage/rentals/{id}/delivery', 'token', [], 'json'),
@@ -186,6 +187,12 @@ final class LockerApi
     public function platformAppLockerShopOrders(?string $scope = null, ?int $page = null, ?int $perPage = null, ?array $extraQuery = null): mixed
     {
         return ($this->call)(self::operations()['platformAppLockerShopOrders'], ['scope' => $scope, 'page' => $page, 'per_page' => $perPage, 'extraQuery' => $extraQuery], null, []);
+    }
+
+    /** POST /app/v1/locker-shop/interest — Count product views and cart adds */
+    public function platformAppLockerShopRecordInterest(array $body, ?array $extraQuery = null): mixed
+    {
+        return ($this->call)(self::operations()['platformAppLockerShopRecordInterest'], ['extraQuery' => $extraQuery], $body, []);
     }
 
     /** POST /app/v1/locker-shop/orders/{id}/refund-request — Ask for a refund after a door would not open */
